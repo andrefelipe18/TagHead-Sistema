@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\TarefaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,4 +32,21 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+});
+
+//Rotas para o CRUD de tarefas
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->prefix('/tarefa')
+->group(function(){
+//Rotas para o CRUD de tarefas
+
+Route::get('/', [TarefaController::class, 'index'])->name('tarefa.index');
+Route::get('/create', [TarefaController::class, 'create'])->name('tarefa.create');
+Route::post('/store', [TarefaController::class, 'store'])->name('tarefa.store');
+Route::get('/{id}/edit', [TarefaController::class, 'edit'])->name('tarefa.edit');
+Route::put('/{id}/update', [TarefaController::class, 'update'])->name('tarefa.update');
+Route::delete('/{id}/destroy', [TarefaController::class, 'destroy'])->name('tarefa.destroy');
 });

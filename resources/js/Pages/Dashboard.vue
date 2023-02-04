@@ -1,25 +1,21 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import Aside from '@/Components/Aside.vue';
 </script>
 
 <template>
     <!-- Navbar -->
     <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
     <!-- Fim navbar  -->
-    <!-- Area principal do componente -->
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+    <main>
+        <div class="flex flex-col md:flex-row">
+            <!-- Aside -->
+            <Aside />
+            <!-- Fim aside -->
+            <!-- Conteudo principal -->
 
-                </div>
-            </div>
+            <!-- Fim Conteudo principal -->
         </div>
-    <!-- Fim area principal do componente -->
+    </main>
     </AppLayout>
 </template>
