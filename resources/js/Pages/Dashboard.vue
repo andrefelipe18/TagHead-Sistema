@@ -13,7 +13,9 @@ import Aside from '@/Components/Aside.vue';
             <Aside />
             <!-- Fim aside -->
             <!-- Conteudo principal -->
+            <slot name="conteudo">
 
+            </slot>
             <!-- Fim Conteudo principal -->
         </div>
     </main>
