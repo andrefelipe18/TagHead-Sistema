@@ -1,7 +1,7 @@
 <script setup>
 import Dashboard from "../Dashboard.vue";
-import CheckboxTarefa from "../../Components/CheckboxTarefa.vue";
 import { Head, Link } from "@inertiajs/vue3";
+import Tarefa from "./Tarefa.vue";
 defineProps({ tarefas: Object });
 </script>
 <script>
@@ -11,19 +11,26 @@ export default {
     Dashboard,
     Head,
     Link,
-    CheckboxTarefa,
+    Tarefa,
   },
   data() {
     return {
-
-    }
+      //Pegando as tarefas do banco de dados
+      tarefasData: this.$page.props.tarefas,
+      filtro: "todos",
+    };
   },
-  methods: {
-    apagar(id) {
-      if (confirm("Deseja realmente excluir?")) {
-        this.$inertia.delete(route("tarefa.destroy", id));
-      }
-    },
+  computed: {
+    tarefasFiltradas(){
+        //Filtrando as tarefas com base no select
+        if(this.filtro == "concluidas"){
+            return this.tarefasData.filter(tarefa => tarefa.concluida == "sim")
+        } else if(this.filtro == "aFazer"){
+            return this.tarefasData.filter(tarefa => tarefa.concluida == "nao")
+        } else {
+            return this.tarefasData
+        }
+    }
   },
 };
 </script>
@@ -40,8 +47,7 @@ export default {
           <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
             <!-- Titulo texto - inicio -->
             <div class="mb-10 md:mb-16">
-              <h2
-                class="
+              <h2 class="
                   text-gray-800 text-2xl
                   lg:text-3xl
                   font-bold
@@ -52,6 +58,16 @@ export default {
               >
                 Lista de tarefas
             </h2>
+                <p class="text-th-black-600 text-center">
+                    Total de tarefas: <span class="text-th-red-600">{{ tarefasFiltradas.length }}</span>
+                </p>
+                <p class="text-th-black-600 text-center">
+                    <select id="countries" class="bg-gray-50 border border-th-red-300 text-th-black-900 text-sm rounded-lg focus:ring-th-red-500 focus:border-th-red-500 block w-56 p-2.5" v-model="filtro">
+                    <option value="todos" selected class="bg-th-black-900 rounded-sm text-th-white">Todos</option>
+                    <option value="concluidas" class="bg-th-black-900 rounded-sm text-th-white">Concluidas</option>
+                    <option value="aFazer" class="bg-th-black-900 rounded-sm text-th-white">A Fazer</option>
+                    </select>
+                </p>
             </div>
             <!-- Titulo - fim -->
             <div
@@ -66,41 +82,7 @@ export default {
               "
             >
               <!-- tarefa - inicio -->
-              <div class="bg-th-white shadow-xl rounded-md p-4"
-               v-for="tarefa in tarefas" :key="tarefa.id">
-                <div class="flex justify-between items-start gap-2 px-2" >
-                  <div class="flex flex-col">
-                    <Link
-                     :href="route('tarefa.show', tarefa.id)"
-                      class="
-                       text-th-black-800
-                        hover:text-red-500
-                        text-lg
-                        lg:text-xl
-                        font-bold
-                        transition
-                        duration-100
-                      "
-                      >
-                      {{ tarefa.titulo }}
-                      </Link>
-                    <p class="text-th-black-800">
-                        <!-- Formantando o horario -->
-                        {{ $moment(tarefa.created_at).format('HH:mm') }} -
-                        {{ $moment(tarefa.created_at).format('DD/MM/YYYY') }}
-                    </p>
-                    <div class="flex justify-between items-center">
-
-                        <div class="flex">
-                            <Link :href="route('tarefa.edit', tarefa.id)" class="text-th-blue-800 mt-2 mr-2">Editar</Link>
-                            <button @click="apagar(tarefa.id)" class="text-th-red-800 mt-2" type="button">Excluir</button>
-                        </div>
-                        <!-- input para marcar como concluido -->
-                        <CheckboxTarefa :id="tarefa.id" :concluidaprop="tarefa.concluida"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <Tarefa v-for="tarefa in tarefasFiltradas" :key="tarefa.id" :tarefa="tarefa"/>
               <!-- tarefa - fim -->
             </div>
           </div>
