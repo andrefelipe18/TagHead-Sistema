@@ -13,7 +13,7 @@ export default {
   },
   data() {
     return {
-        test: 'teste'
+        check: 0,
     }
   },
   methods: {
@@ -72,7 +72,7 @@ export default {
               <!-- tarefa - inicio -->
               <div class="bg-th-white shadow-xl rounded-md p-4"
                v-for="tarefa in tarefas" :key="tarefa.id">
-                <div class="flex justify-between items-start gap-2 px-2">
+                <div class="flex justify-between items-start gap-2 px-2" >
                   <div class="flex flex-col">
                     <Link
                      :href="route('tarefa.show', tarefa.id)"
@@ -99,7 +99,8 @@ export default {
                             <button @click="apagar(tarefa.id)" class="text-th-red-800 mt-2" type="button">Excluir</button>
                         </div>
                         <!-- input para marcar como concluido -->
-                        <input id="bordered-checkbox-1" type="checkbox" value="" name="concluido" class="w-4 mt-2 h-4 text-th-black-700 bg-th-red-400 border-th-red-700 rounded focus:ring-th-red-700  focus:ring-2" >
+                        {{ check }}
+                        <input id="checlbox" :value="tarefa.concluido" type="checkbox" name="concluido" class="w-4 mt-2 h-4 text-th-black-700 bg-th-red-400 border-th-red-700 rounded focus:ring-th-red-700  focus:ring-2" v-model="check" true-value="1" false-value="0">
                     </div>
                   </div>
                 </div>

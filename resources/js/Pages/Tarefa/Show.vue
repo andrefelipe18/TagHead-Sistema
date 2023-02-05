@@ -31,7 +31,8 @@ export default {
                                 </textarea>
                             </div>
                             <div class="mt-5">
-                                <p class="text-th-white" for="titulo">Data - {{ tarefa.created_at }}</p>
+                                <p class="text-th-white" for="titulo">Data -  {{ $moment(tarefa.created_at).format('HH:mm') }} -
+                        {{ $moment(tarefa.created_at).format('DD/MM/YYYY') }} </p>
                             </div>
                             <div class="mt-5">
                                 <label class="text-th-white" for="titulo">Concluida -
