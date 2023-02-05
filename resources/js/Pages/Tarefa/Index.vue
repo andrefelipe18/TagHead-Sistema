@@ -1,5 +1,6 @@
 <script setup>
 import Dashboard from "../Dashboard.vue";
+import CheckboxTarefa from "../../Components/CheckboxTarefa.vue";
 import { Head, Link } from "@inertiajs/vue3";
 defineProps({ tarefas: Object });
 </script>
@@ -10,10 +11,11 @@ export default {
     Dashboard,
     Head,
     Link,
+    CheckboxTarefa,
   },
   data() {
     return {
-        check: 0,
+
     }
   },
   methods: {
@@ -23,12 +25,6 @@ export default {
       }
     },
   },
-  computed: {
-    dataFormatada(data) {
-        //Formatar data para dd/mm/yyyy com o $moment
-        return this.$moment(data).format("DD/MM/YYYY");
-    }
-  }
 };
 </script>
 <template>
@@ -94,13 +90,13 @@ export default {
                         {{ $moment(tarefa.created_at).format('DD/MM/YYYY') }}
                     </p>
                     <div class="flex justify-between items-center">
+
                         <div class="flex">
                             <Link :href="route('tarefa.edit', tarefa.id)" class="text-th-blue-800 mt-2 mr-2">Editar</Link>
                             <button @click="apagar(tarefa.id)" class="text-th-red-800 mt-2" type="button">Excluir</button>
                         </div>
                         <!-- input para marcar como concluido -->
-                        {{ check }}
-                        <input id="checlbox" :value="tarefa.concluido" type="checkbox" name="concluido" class="w-4 mt-2 h-4 text-th-black-700 bg-th-red-400 border-th-red-700 rounded focus:ring-th-red-700  focus:ring-2" v-model="check" true-value="1" false-value="0">
+                        <CheckboxTarefa :id="tarefa.id" :concluidaprop="tarefa.concluida"/>
                     </div>
                   </div>
                 </div>

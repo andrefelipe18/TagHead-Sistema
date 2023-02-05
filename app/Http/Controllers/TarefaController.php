@@ -6,6 +6,7 @@ use App\Models\Tarefa;
 use Illuminate\Http\Request;
 //Chamando o Inertia
 use Inertia\Inertia;
+use Termwind\Components\Dd;
 
 class TarefaController extends Controller
 {
@@ -56,7 +57,7 @@ class TarefaController extends Controller
         $tarefa = new Tarefa();
         $tarefa->titulo = $request->titulo;
         $tarefa->descricao = $request->descricao;
-        $tarefa->concluida = false;
+        $tarefa->concluida = 'nao';
         $tarefa->save();
 
         //Redirecionando para a página de listagem
@@ -120,19 +121,37 @@ class TarefaController extends Controller
             'descricao.required' => 'O campo descrição é obrigatório',
         ];
         $request->validate($validacao, $mensagens);
-        //Pegando o id da tarefa
-        $id = $request->id;
         //Pegando a tarefa
-        $tarefa = Tarefa::find($id);
+        $tarefa = Tarefa::find($request->id);
         //Atualizando a tarefa
         $tarefa->titulo = $request->titulo;
         $tarefa->descricao = $request->descricao;
-        $tarefa->concluida = $request->concluida;
+        //verificando se o checkbox foi marcado (se alterarConclusao existe no $request)
+        if ($request->has('alterarConclusao')) {
+            //Se o checkbox foi marcado, a tarefa será concluída
+            $tarefa->concluida = $request->alterarConclusao;
+        }
         $tarefa->save();
         //Redirecionando para a página de listagem
         return redirect()->route('tarefa.index');
     }
+    /**
+     *  Atualiza o status da tarefa
+     *
+     *
+     */
+    public function concluir($id, $concluida)
+    {
+        // Procure a tarefa pelo id
+        $tarefa = Tarefa::find($id);
 
+        // Atualize a tarefa com o valor de concluida
+        $tarefa->concluida = $concluida;
+        $tarefa->save();
+
+        // Redirecione o usuário de volta à página anterior ou a uma página específica
+        return redirect()->back();
+    }
     /**
      * Remova o recurso especificado do armazenamento.
      *

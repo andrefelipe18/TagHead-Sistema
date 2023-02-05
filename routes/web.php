@@ -49,5 +49,7 @@ Route::post('/store', [TarefaController::class, 'store'])->name('tarefa.store');
 Route::get('/{id}/show', [TarefaController::class, 'show'])->name('tarefa.show');
 Route::get('/{id}/edit', [TarefaController::class, 'edit'])->name('tarefa.edit');
 Route::put('/{id}/update', [TarefaController::class, 'update'])->name('tarefa.update');
+//Rota para concluir a tarefa
+Route::put('tarefa/{id}/{concluida}', [TarefaController::class, 'concluir'])->name('tarefa.concluir');
 Route::delete('/{id}/destroy', [TarefaController::class, 'destroy'])->name('tarefa.destroy');
 });
