@@ -47,7 +47,7 @@ export default {
         </div>
     </template>
   </Dashboard>
-
+  <Head :title="`Visualizar Tarefa - ID ${tarefa.id}`" />
 </template>
 <style>
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import Dashboard from '../Dashboard.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3'
-defineProps({ errors: Object});
+defineProps({ errors: Object, tarefa: Object});
 </script>
 <script>
 export default {
@@ -27,7 +27,7 @@ export default {
                 <Link :href="route('tarefa.index')" class="p-1 text-th-red-800 rounded-lg text-center">Voltar</Link>
                 <div class="mt-32">
                     <section class="max-w-4xl p-6 mx-auto bg-th-black-900 rounded-md shadow-md">
-                    <h2 class="text-lg font-semibold text-th-white capitalize ">Criar nova tarefa {{ tarefa }}</h2>
+                    <h2 class="text-lg font-semibold text-th-white capitalize ">Editar tarefa - ID {{ tarefa.id }}</h2>
                     <form @submit.prevent="form.put(route('tarefa.update', form.id))">
                         <div class="flex flex-col">
                             <div class="mt-5">
@@ -53,7 +53,7 @@ export default {
             </div>
         </template>
     </Dashboard>
-    <Head title="Criar Tarefa" />
+    <Head :title="`Editar Tarefa - ID ${tarefa.id}`" />
 </template>
 <style>
 

@@ -22,6 +22,12 @@ export default {
         this.$inertia.delete(route("tarefa.destroy", id));
       }
     },
+  },
+  computed: {
+    dataFormatada(data) {
+        //Formatar data para dd/mm/yyyy com o $moment
+        return this.$moment(data).format("DD/MM/YYYY");
+    }
   }
 };
 </script>
@@ -29,12 +35,10 @@ export default {
   <Dashboard>
     <template v-slot:conteudo>
       <div class="h-100 w-100 mx-auto">
-        <Link
-          :href="route('tarefa.create')"
-          class="p-1 text-th-red-800 rounded-lg"
-        >
-          Criar tarefa</Link
-        >
+        <!-- Link criar nova tarefa -->
+        <Link :href="route('tarefa.create')" class="fixed w-16 h-16 bg-th-red-500 text-center text-3xl bottom-9 right-9 rounded-3xl shadow-lg z-10">
+        <p class="mt-3 text-th-white font-bold">+</p>
+        </Link>
         <!-- Listagem de tarefas -->
         <div class="bg-white py-6 sm:py-8 lg:py-12">
           <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
@@ -84,10 +88,18 @@ export default {
                       >
                       {{ tarefa.titulo }}
                       </Link>
-                    <p class="text-th-black-800">{{ tarefa.created_at }}</p>
-                    <div class="flex ">
-                    <Link :href="route('tarefa.edit', tarefa.id)" class="text-th-blue-800 mt-2 mr-2">Editar {{ tarefa.id }}</Link>
-                    <button @click="apagar(tarefa.id)" class="text-th-red-800 mt-2" type="button">Excluir</button>
+                    <p class="text-th-black-800">
+                        <!-- Formantando o horario -->
+                        {{ $moment(tarefa.created_at).format('HH:mm') }} -
+                        {{ $moment(tarefa.created_at).format('DD/MM/YYYY') }}
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <div class="flex">
+                            <Link :href="route('tarefa.edit', tarefa.id)" class="text-th-blue-800 mt-2 mr-2">Editar</Link>
+                            <button @click="apagar(tarefa.id)" class="text-th-red-800 mt-2" type="button">Excluir</button>
+                        </div>
+                        <!-- input para marcar como concluido -->
+                        <input id="bordered-checkbox-1" type="checkbox" value="" name="concluido" class="w-4 mt-2 h-4 text-th-black-700 bg-th-red-400 border-th-red-700 rounded focus:ring-th-red-700  focus:ring-2" >
                     </div>
                   </div>
                 </div>

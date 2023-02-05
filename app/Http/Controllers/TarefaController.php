@@ -87,11 +87,15 @@ class TarefaController extends Controller
      * @param  \App\Models\Tarefa  $tarefa
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tarefa $tarefa)
+    public function edit(Tarefa $tarefa, Request $request)
     {
+        //Pegando o id da tarefa
+        $id = $request->id;
+        //Pegando a tarefa
+        $tarefa = Tarefa::find($id);
         //Retornando a view com vue
         return Inertia::render('Tarefa/Edit', [
-            'tarefas' => $tarefa
+            'tarefa' => $tarefa
         ]);
     }
 
@@ -104,7 +108,29 @@ class TarefaController extends Controller
      */
     public function update(Request $request, Tarefa $tarefa)
     {
-        //
+        //Validando os dados
+        $validacao = [
+            'titulo' => 'required|max:255|min:3',
+            'descricao' => 'required',
+        ];
+        $mensagens = [
+            'titulo.required' => 'O campo título é obrigatório',
+            'titulo.max' => 'O campo título deve ter no máximo 255 caracteres',
+            'titulo.min' => 'O campo título deve ter no mínimo 3 caracteres',
+            'descricao.required' => 'O campo descrição é obrigatório',
+        ];
+        $request->validate($validacao, $mensagens);
+        //Pegando o id da tarefa
+        $id = $request->id;
+        //Pegando a tarefa
+        $tarefa = Tarefa::find($id);
+        //Atualizando a tarefa
+        $tarefa->titulo = $request->titulo;
+        $tarefa->descricao = $request->descricao;
+        $tarefa->concluida = $request->concluida;
+        $tarefa->save();
+        //Redirecionando para a página de listagem
+        return redirect()->route('tarefa.index');
     }
 
     /**
@@ -113,9 +139,13 @@ class TarefaController extends Controller
      * @param  \App\Models\Tarefa  $tarefa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tarefa $tarefa)
+    public function destroy(Tarefa $tarefa, Request $request)
     {
-        //Apagando a tarefa
+        //Pegando o id da tarefa
+        $id = $request->id;
+        //Pegando a tarefa
+        $tarefa = Tarefa::find($id);
+        //Deletando a tarefa
         $tarefa->delete();
         //Redirecionando para a página de listagem
         return redirect()->route('tarefa.index');
