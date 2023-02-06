@@ -26,7 +26,11 @@ export default {
     <Dashboard>
         <template v-slot:conteudo>
             <div class="h-100 w-100 mx-auto flex flex-col">
-                <Link :href="route('tarefa.index')" class="p-1 text-th-red-800 rounded-lg text-center">Voltar</Link>
+                <!-- Link para voltar -->
+                <Link :href="route('tarefa.index')" class="fixed w-16 h-16 bg-th-red-500 text-center text-3xl bottom-9 right-9 rounded-3xl shadow-lg z-10">
+                <p class="mt-3 text-th-white font-bold">←</p>
+                </Link>
+                <!-- Formulario de criação -->
                 <div class="mt-32">
                     <section class="max-w-4xl p-6 mx-auto bg-th-black-900 rounded-md shadow-md">
                     <h2 class="text-lg font-semibold text-th-white capitalize ">Criar nova tarefa</h2>

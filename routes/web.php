@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TarefaController;
+use App\Http\Controllers\PostagemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,4 +53,23 @@ Route::put('/{id}/update', [TarefaController::class, 'update'])->name('tarefa.up
 //Rota para concluir a tarefa
 Route::put('tarefa/{id}/{concluida}', [TarefaController::class, 'concluir'])->name('tarefa.concluir');
 Route::delete('/{id}/destroy', [TarefaController::class, 'destroy'])->name('tarefa.destroy');
+});
+
+//Rotas para o CRUD de Postagens
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->prefix('/postagem')
+->group(function(){
+//Rotas para o CRUD de tarefas
+
+Route::get('/', [PostagemController::class, 'index'])->name('postagem.index');
+Route::get('/create', [PostagemController::class, 'create'])->name('postagem.create');
+Route::post('/store', [PostagemController::class, 'store'])->name('postagem.store');
+Route::get('/{id}/show', [PostagemController::class, 'show'])->name('postagem.show');
+Route::get('/{id}/edit', [PostagemController::class, 'edit'])->name('postagem.edit');
+Route::put('/{id}/update', [PostagemController::class, 'update'])->name('postagem.update');
+Route::delete('/{id}/destroy', [PostagemController::class, 'destroy'])->name('postagem.destroy');
 });

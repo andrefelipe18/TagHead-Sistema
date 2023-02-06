@@ -74,13 +74,15 @@ export default {
                 duration-100
                 "
                 >
+                <s>
                 {{ tarefa.titulo }}
+                </s>
             </Link>
-            <p class="text-th-black-300">
+            <s class="text-th-black-300">
                 <!-- Formantando o horario -->
                 {{ $moment(tarefa.created_at).format('HH:mm') }} -
                 {{ $moment(tarefa.created_at).format('DD/MM/YYYY') }}
-            </p>
+            </s>
             <div class="flex justify-between items-center">
 
                 <div class="flex">
