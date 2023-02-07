@@ -18,6 +18,5 @@ class Postagem extends Model
     //Alterando o nome da tabela
     protected $table = 'postagens';
 
-    //Alterando o modelo de data para o formato brasileiro
-    protected $dateFormat = 'd/m/Y H:i:s';
+
 }

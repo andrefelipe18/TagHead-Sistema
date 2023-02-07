@@ -43,7 +43,28 @@ class PostagemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validacoes = [
+            'titulo' => 'required',
+            'conteudo' => 'required',
+            'legenda' => 'required',
+        ];
+        $mensagens = [
+            'titulo.required' => 'O campo título é obrigatório',
+            'conteudo.required' => 'O campo conteúdo é obrigatório',
+            'legenda.required' => 'O campo legenda é obrigatório',
+        ];
+        $request->validate($validacoes, $mensagens);
+
+
+        //Criando a postagem
+        Postagem::create([
+            'titulo' => $request->titulo,
+            'conteudo' => $request->conteudo,
+            'legenda' => $request->legenda,
+
+        ]);
+
+        return redirect()->route('postagem.index');
     }
 
     /**

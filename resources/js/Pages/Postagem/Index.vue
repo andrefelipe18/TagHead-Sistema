@@ -23,7 +23,7 @@ export default {
         <p class="mt-3 text-th-white font-bold">+</p>
         </Link>
         <!-- listagem dos posts -->
-        <Post></Post>
+        <Post v-for="(postagem) in postagens" :key="postagem.id" :postagem="postagem"></Post>
     </template>
   </Dashboard>
   <Head title="Postagens" />
