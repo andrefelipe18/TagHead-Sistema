@@ -34,7 +34,7 @@ export default {
                 <!-- Formulario de criação -->
                 <div class="mt-32">
                     <section class="max-w-4xl p-6 mx-auto bg-th-black-900 rounded-md shadow-md">
-                    <h2 class="text-lg font-semibold text-th-white capitalize ">Criar nova tarefa</h2>
+                    <h2 class="text-lg font-semibold text-th-white capitalize ">Criar nova postagem</h2>
                     <form @submit.prevent="form.post(route('postagem.store'))">
                         <div class="flex flex-col">
                             <div class="mt-5">
